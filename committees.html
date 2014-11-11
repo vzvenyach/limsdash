@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>OpenLIMS Test</title>
+<link rel="stylesheet" href="c3.css">
+</head>
+<body>
+<h1>OpenLIMS Dashboard</h1>
+<h2>Committees</h2>
+<div id="chart"></div>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" charset="utf-8"></script>
+<script src="d3plus.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+<script type="text/javascript">
+	var committee_data = 
+	    {
+	    	"Business, Consumer, and Regulatory Affairs":0,
+		    "Committee of the Whole":0,
+		    "Economic Development":0,
+		    "Education":0,
+		    "Finance and Revenue":0,
+		    "Government Operations":0,
+		    "Health":0,
+		    "Human Services":0,
+		    "Judiciary and Public Safety":0,
+		   	"Retained by the Council":0,
+		    "Transportation and the Environment":0,
+		    "Workforce and Community Affairs":0
+		}
+
+	var out = []
+	$.getJSON("https://openlims.herokuapp.com/search?status=40&measure_type=1", function (d) {
+		d["data"].forEach(function (el, idx, array) {
+			// JSON.parse(el["CommitteeReferral"])
+			JSON.parse(el["ComitteeReferral"]).forEach(function (cmte) {
+				console.log(cmte.Name)
+				committee_data[cmte.Name] = committee_data[cmte.Name] + 1;
+			})
+		})
+		_.map(committee_data, function (num, key) {
+			if (key != "Retained by the Council") { 
+				out.push({"value":num,"name":key})
+			}
+		})
+		var visualization = d3plus.viz()
+		    .container("#chart")  // container DIV to hold the visualization
+		    .data(out)  // data to use with the visualization
+		    .type("tree_map")   // visualization type
+		    .id("name")         // key for which our data is unique on
+		    .size("value")      // sizing of blocks
+		    .draw()             // finally, draw the visualization!
+	})
+</script>
+</body>
+</html>
