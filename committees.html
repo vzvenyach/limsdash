@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>OpenLIMS Dashboard</h1>
-<h2>Number of Bills Pending in Committee</h2>
+<h2>Number of Bills and Resolutions Pending in Committee</h2>
 <div id="chart"></div>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" charset="utf-8"></script>
@@ -16,20 +16,18 @@
 	    {
 	    	"Business, Consumer, and Regulatory Affairs":0,
 		    "Committee of the Whole":0,
-		    "Economic Development":0,
 		    "Education":0,
 		    "Finance and Revenue":0,
-		    "Government Operations":0,
-		    "Health":0,
-		    "Human Services":0,
-		    "Judiciary and Public Safety":0,
+		    "Health and Human Services":0,
+		    "Housing and Community Development":0,
+		    "Judiciary":0,
 		   	"Retained by the Council":0,
 		    "Transportation and the Environment":0,
 		    "Workforce and Community Affairs":0
 		}
 
 	var out = []
-	$.getJSON("https://openlims.herokuapp.com/search?status=40&measure_type=1", function (d) {
+	$.getJSON("https://openlims.herokuapp.com/search?start_date=1/1/2015&status=10", function (d) {
 		d["data"].forEach(function (el, idx, array) {
 			// JSON.parse(el["CommitteeReferral"])
 			JSON.parse(el["ComitteeReferral"]).forEach(function (cmte) {
