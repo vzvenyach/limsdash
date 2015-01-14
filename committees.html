@@ -2,14 +2,16 @@
 <head>
 <title>OpenLIMS Test</title>
 <link rel="stylesheet" href="c3.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 </head>
 <body>
 <h1>OpenLIMS Dashboard</h1>
 <h2>Number of Bills and Resolutions Pending in Committee</h2>
 <div id="chart"></div>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js" charset="utf-8"></script>
 <script src="d3plus.full.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 <script type="text/javascript">
 	var committee_data = 
@@ -25,9 +27,8 @@
 		    "Transportation and the Environment":0,
 		    "Workforce and Community Affairs":0
 		}
-
 	var out = []
-	$.getJSON("https://openlims.herokuapp.com/search?start_date=1/1/2015&status=10", function (d) {
+	$.getJSON("https://openlims.herokuapp.com/search?start_date=1/1/2015&status=40", function (d) {
 		d["data"].forEach(function (el, idx, array) {
 			// JSON.parse(el["CommitteeReferral"])
 			JSON.parse(el["ComitteeReferral"]).forEach(function (cmte) {
@@ -46,7 +47,10 @@
 		    .type("tree_map")   // visualization type
 		    .id("name")         // key for which our data is unique on
 		    .size("value")      // sizing of blocks
+		    // .tooltip()
 		    .draw()             // finally, draw the visualization!
+	
+		console.log(visualization.tooltip.data)
 	})
 </script>
 </body>
