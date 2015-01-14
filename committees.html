@@ -30,8 +30,7 @@
 	var out = []
 	$.getJSON("https://openlims.herokuapp.com/search?start_date=1/1/2015&status=40", function (d) {
 		d["data"].forEach(function (el, idx, array) {
-			// JSON.parse(el["CommitteeReferral"])
-			JSON.parse(el["ComitteeReferral"]).forEach(function (cmte) {
+			JSON.parse(el["ComitteeReferral"] || "[]").forEach(function (cmte) {
 				console.log(cmte.Name)
 				committee_data[cmte.Name] = committee_data[cmte.Name] + 1;
 			})
